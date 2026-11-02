@@ -33,3 +33,7 @@ pwsh -NoProfile -File ./tests/Hide-DotFolders.Tests.ps1
 ```
 
 The integration check creates its own temporary folders; it never scans a real user profile. PowerShell 5.1 compatibility is intended but must be verified separately if it was not used for the recorded check.
+
+## License
+
+Licensed under the [MIT License](LICENSE).
