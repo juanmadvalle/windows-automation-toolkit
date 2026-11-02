@@ -80,4 +80,6 @@ $ErrorActionPreference = 'Continue'
 & $hostExe -NoProfile -ExecutionPolicy Bypass -File $utility -RestoreManifest $bad *> $null
 $ErrorActionPreference = 'Stop'
 Assert ($LASTEXITCODE -ne 0) 'Invalid recovery reported process success'
+# The failure above is expected; do not leak its status to a CI wrapper.
+$global:LASTEXITCODE = 0
 Write-Output 'PASS: summaries, exclusive records, preflight, junction rejection, persistence failure, process failure status.'
