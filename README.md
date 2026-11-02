@@ -1,6 +1,6 @@
 # Windows automation toolkit
 
-Small personal Windows utilities. Private repository candidate; no scheduled task is installed by this repository.
+Small personal Windows utilities. No scheduled task is installed by this repository.
 
 ## Hide dot folders
 
