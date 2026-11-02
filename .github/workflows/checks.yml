@@ -5,7 +5,13 @@ permissions:
 jobs:
   test:
     runs-on: windows-latest
+    strategy:
+      matrix:
+        shell: [powershell, pwsh]
     steps:
       - uses: actions/checkout@v4
-      - shell: pwsh
-        run: ./tests/Hide-DotFolders.Tests.ps1
+      - shell: ${{ matrix.shell }}
+        run: |
+          ./tests/Hide-DotFolders.Tests.ps1
+          ./tests/Safety.Tests.ps1
+          ./tests/Task.Tests.ps1

@@ -1,3 +1,4 @@
 dotfolders-*.json
 *.tmp
 *.log
+*.lock
