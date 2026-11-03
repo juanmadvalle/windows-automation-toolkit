@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Record each hidden folder's creation time and skip it on restore if the
+  directory was replaced since the run (older manifests still restore).
 - Add a read-only hidden-folder audit with mandatory paths, exact exclusions,
   depth limits, non-overwriting HTML/CSV/JSON reports and explicit scan errors.
 - Protect spreadsheet cells, encode HTML, ignore generated reports, and test

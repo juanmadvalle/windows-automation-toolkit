@@ -76,6 +76,13 @@ try {
             $folder = Get-Item -LiteralPath $fullName -Force
             if (-not $folder.PSIsContainer) { throw 'Manifest entry must be a directory.' }
             $seen[$fullName] = $true
+            # Entries recorded with an identity must still point at the same directory.
+            $recordedTicks = if ($entry.PSObject.Properties['CreatedTicks']) { [string] $entry.CreatedTicks } else { $null }
+            if ($recordedTicks -and $recordedTicks -ne [string] $folder.CreationTimeUtc.Ticks) {
+                $summary.Skipped++
+                Write-Warning "Skipped '$fullName': directory was replaced since the run."
+                continue
+            }
             $validated += $fullName
         }
         foreach ($fullName in $validated) {
@@ -121,7 +128,7 @@ try {
                         $lock = [System.IO.File]::Open($lockPath, 'CreateNew', 'Write', 'None')
                         if (Test-Path -LiteralPath $manifest) { throw 'Manifest appeared during startup; nothing overwritten.' }
                     }
-                    $record.Entries += [ordered]@{ Path = $folder.FullName }
+                    $record.Entries += [ordered]@{ Path = $folder.FullName; CreatedTicks = [string] $folder.CreationTimeUtc.Ticks }
                     # A persistence failure aborts before this directory changes.
                     Save-Manifest $manifest $record
                     try {

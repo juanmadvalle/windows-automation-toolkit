@@ -27,4 +27,16 @@ Assert-Hidden '.visible' $true
 Assert-Hidden '.visible' $false
 Assert-Hidden 'ordinary/.nested' $false
 Assert-Hidden '.already' $true
+# A directory replaced after the run must not be touched by restore.
+$replaceRoot = Join-Path $testRoot 'replace'
+New-Item -ItemType Directory -Path (Join-Path $replaceRoot '.swap') -Force | Out-Null
+$replaceManifest = Join-Path $testRoot 'dotfolders-replace.json'
+& $script -Path $replaceRoot -ManifestPath $replaceManifest | Out-Null
+$swap = Join-Path $replaceRoot '.swap'
+Remove-Item -LiteralPath $swap -Force
+$replacement = New-Item -ItemType Directory -Path $swap
+$replacement.CreationTimeUtc = [datetime]::UtcNow.AddDays(-30)  # defeat NTFS tunnelling
+$replacement.Attributes = $replacement.Attributes -bor [System.IO.FileAttributes]::Hidden
+& $script -RestoreManifest $replaceManifest -WarningAction SilentlyContinue | Out-Null
+if (-not ((Get-Item -LiteralPath $swap -Force).Attributes -band [System.IO.FileAttributes]::Hidden)) { throw 'Restore changed a replaced directory' }
 Write-Output "PASS: preview, recursive exclusions, preservation, and restore. Fixture: $testRoot"
