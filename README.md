@@ -28,7 +28,7 @@ The root itself is not hidden. Reparse points (including junctions) are skipped;
 
 Each run returns a summary with Changed, Skipped, Previewed and Failed counts. Manifests are exclusively locked, flushed and atomically replaced before each change. Recovery validates the full record before altering folders.
 
-Restore clears only Hidden from recorded paths, retaining other attributes. It also covers a run interrupted between recording intent and applying the attribute. It cannot distinguish a later user change or a replacement directory at the same path: inspect manifests before restoring. Keep the folder tree idle during a run; hostile concurrent filesystem changes are outside scope.
+Restore clears only Hidden from recorded paths, retaining other attributes. It also covers a run interrupted between recording intent and applying the attribute. Each entry records the folder's creation time; restore skips with a warning any directory that was replaced since the run (manifests without this field still restore). It cannot detect later attribute changes by the user to the same folder: inspect manifests before restoring. Keep the folder tree idle during a run; hostile concurrent filesystem changes are outside scope.
 
 The recovered original and existing deployed script/task are untouched. Recursion is now opt-in, a target path is mandatory, and there is no silent error suppression.
 
