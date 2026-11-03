@@ -13,9 +13,11 @@ jobs:
           ./tests/Hide-DotFolders.Tests.ps1
           ./tests/Safety.Tests.ps1
           ./tests/Task.Tests.ps1
+          ./tests/Audit.Tests.ps1
       - name: PowerShell 7
         shell: pwsh
         run: |
           ./tests/Hide-DotFolders.Tests.ps1
           ./tests/Safety.Tests.ps1
           ./tests/Task.Tests.ps1
+          ./tests/Audit.Tests.ps1

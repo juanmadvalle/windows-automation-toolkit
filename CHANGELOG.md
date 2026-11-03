@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+- Add a read-only hidden-folder audit with mandatory paths, exact exclusions,
+  depth limits, non-overwriting HTML/CSV/JSON reports and explicit scan errors.
+- Protect spreadsheet cells, encode HTML, ignore generated reports, and test
+  synthetic trees, inaccessible directories, empty results and junctions.
+
 ## 0.2.0
 
 - Preflight all recovery paths and reject junction/symlink ancestors.

@@ -2,6 +2,10 @@
 
 Small personal Windows utilities. Sign-in automation is optional and requires an explicit install command.
 
+## Audit hidden folders
+
+`scripts/dotfiles/Audit-DotFolders.ps1` reports hidden and dot-prefixed directories without modifying the scanned tree. It requires explicit input/output paths, defaults to immediate children, supports exclusions and bounded depth, and exports HTML, protected CSV and JSON. See the [audit guide](docs/AUDIT.md) for examples, privacy and incomplete-scan handling.
+
 ## Hide dot folders
 
 Requires Windows PowerShell 5.1 or PowerShell 7 on Windows. Only directories whose names start with `.` receive the Hidden attribute. Existing attributes and already-hidden folders are preserved. Files such as `.gitignore` are not changed. Hidden is a display preference, not an access restriction or sync-exclusion policy.
@@ -34,6 +38,7 @@ The recovered original and existing deployed script/task are untouched. Recursio
 pwsh -NoProfile -File ./tests/Hide-DotFolders.Tests.ps1
 pwsh -NoProfile -File ./tests/Safety.Tests.ps1
 pwsh -NoProfile -File ./tests/Task.Tests.ps1
+pwsh -NoProfile -File ./tests/Audit.Tests.ps1
 ```
 
 The checks create temporary folders and never scan a real user profile. They run on Windows PowerShell 5.1 and PowerShell 7 in CI. Scheduler commands are mocked, so tests do not install real tasks. The recovery checks create a temporary junction and require permission to do so.

@@ -2,3 +2,4 @@ dotfolders-*.json
 *.tmp
 *.log
 *.lock
+dotfolder-audit-*/
